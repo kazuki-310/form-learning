@@ -3,7 +3,7 @@
 import { useForm } from '@tanstack/react-form';
 import clsx from 'clsx';
 import { CHOICE_OPTIONS, formSchema } from '../../schemas/form-schema';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './Select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 
 export function TanStackForm() {
 	const form = useForm({

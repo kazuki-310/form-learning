@@ -1,4 +1,4 @@
-import { ReactHookForm } from '../components/ReactHookForm';
+import { ReactHookForm } from './ReactHookForm';
 
 export default function Page() {
 	return (

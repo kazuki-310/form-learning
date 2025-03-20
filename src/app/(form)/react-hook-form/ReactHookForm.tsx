@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { CHOICE_OPTIONS, type FormSchema, formSchema } from '../../schemas/form-schema';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './Select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 
 export function ReactHookForm() {
 	const {
@@ -38,19 +38,23 @@ export function ReactHookForm() {
 			<div className='flex flex-col gap-3'>
 				<div className='flex flex-col gap-1'>
 					<label htmlFor='name'>name</label>
-					<input {...register('name')} className='border-2 border-gray-300 rounded-md p-2 w-[300px]' />
+					<input type='text' {...register('name')} className='border-2 border-gray-300 rounded-md p-2 w-[300px]' />
 					{errors.name && <span className='text-xs text-red-500'>{errors.name.message}</span>}
 				</div>
 
 				<div className='flex flex-col gap-1'>
 					<label htmlFor='email'>email</label>
-					<input {...register('email')} className='border-2 border-gray-300 rounded-md p-2 w-[300px]' />
+					<input type='email' {...register('email')} className='border-2 border-gray-300 rounded-md p-2 w-[300px]' />
 					{errors.email && <span className='text-xs text-red-500'>{errors.email.message}</span>}
 				</div>
 
 				<div className='flex flex-col gap-1'>
 					<label htmlFor='password'>password</label>
-					<input {...register('password')} className='border-2 border-gray-300 rounded-md p-2 w-[300px]' />
+					<input
+						type='password'
+						{...register('password')}
+						className='border-2 border-gray-300 rounded-md p-2 w-[300px]'
+					/>
 					{errors.password && <span className='text-xs text-red-500'>{errors.password.message}</span>}
 				</div>
 

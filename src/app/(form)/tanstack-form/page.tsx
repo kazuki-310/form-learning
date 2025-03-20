@@ -1,4 +1,4 @@
-import { TanStackForm } from '../components/TanStackForm';
+import { TanStackForm } from './TanStackForm';
 
 export default function Page() {
 	return (
