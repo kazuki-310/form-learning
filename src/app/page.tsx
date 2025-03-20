@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 const LINKS = [
-	{ href: '/form/tanstack-form', label: 'TanStack Form' },
-	{ href: '/form/react-hook-form', label: 'React Hook Form' },
+	{ href: 'tanstack-form', label: 'TanStack Form' },
+	{ href: 'react-hook-form', label: 'React Hook Form' },
 ];
 
 export default function Page() {
