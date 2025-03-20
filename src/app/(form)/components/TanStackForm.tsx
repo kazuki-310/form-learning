@@ -1,7 +1,8 @@
 'use client';
 
 import { useForm } from '@tanstack/react-form';
-import { formSchema } from '../../schemas/form-schema';
+import { CHOICE_OPTIONS, formSchema } from '../../schemas/form-schema';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './Select';
 
 export function TanStackForm() {
 	const form = useForm({
@@ -9,6 +10,7 @@ export function TanStackForm() {
 			name: '',
 			email: '',
 			password: '',
+			choice: 'option1',
 		},
 		validators: {
 			onChange: formSchema,
@@ -19,8 +21,13 @@ export function TanStackForm() {
 		},
 	});
 
+	const selectOptions = Object.entries(CHOICE_OPTIONS).map(([key, value]) => ({
+		value,
+		label: key,
+	}));
+
 	return (
-		<form onSubmit={form.handleSubmit} className='flex flex-col gap-3 p-4 border-2 rounded-md mt-3'>
+		<form onSubmit={form.handleSubmit} className='flex flex-col gap-3 p-4 mt-3'>
 			<form.Field name='name'>
 				{(field) => (
 					<div className='flex flex-col gap-1'>
@@ -34,7 +41,7 @@ export function TanStackForm() {
 							className='border-2 border-gray-300 rounded-md p-2 w-[300px]'
 						/>
 						{field.state.meta.errors ? (
-							<pre className='text-xs text-red-500'>{field.state.meta.errors[0]?.message}</pre>
+							<span className='text-xs text-red-500'>{field.state.meta.errors[0]?.message}</span>
 						) : null}
 					</div>
 				)}
@@ -53,7 +60,7 @@ export function TanStackForm() {
 							className='border-2 border-gray-300 rounded-md p-2 w-[300px]'
 						/>
 						{field.state.meta.errors ? (
-							<pre className='text-xs text-red-500'>{field.state.meta.errors[0]?.message}</pre>
+							<span className='text-xs text-red-500'>{field.state.meta.errors[0]?.message}</span>
 						) : null}
 					</div>
 				)}
@@ -72,8 +79,28 @@ export function TanStackForm() {
 							className='border-2 border-gray-300 rounded-md p-2 w-[300px]'
 						/>
 						{field.state.meta.errors ? (
-							<pre className='text-xs text-red-500'>{field.state.meta.errors[0]?.message}</pre>
+							<span className='text-xs text-red-500'>{field.state.meta.errors[0]?.message}</span>
 						) : null}
+					</div>
+				)}
+			</form.Field>
+
+			<form.Field name='choice'>
+				{(field) => (
+					<div className='flex flex-col gap-1'>
+						<label htmlFor='choice'>Choice</label>
+						<Select defaultValue={CHOICE_OPTIONS.OPTION1} onValueChange={field.handleChange}>
+							<SelectTrigger className='w-[300px]'>
+								<SelectValue placeholder='Select option' />
+							</SelectTrigger>
+							<SelectContent>
+								{selectOptions.map((option) => (
+									<SelectItem key={option.value} value={option.value}>
+										{option.label}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
 					</div>
 				)}
 			</form.Field>

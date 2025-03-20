@@ -1,94 +1,91 @@
 'use client';
 
-import { useForm } from '@tanstack/react-form';
-import { formSchema } from '../../schemas/form-schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
+import { CHOICE_OPTIONS, type FormSchema, formSchema } from '../../schemas/form-schema';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './Select';
 
 export function ReactHookForm() {
-	const form = useForm({
+	const {
+		register,
+		handleSubmit,
+		control,
+		formState: { errors, isSubmitting, isValid },
+	} = useForm<FormSchema>({
 		defaultValues: {
 			name: '',
 			email: '',
 			password: '',
+			choice: CHOICE_OPTIONS.OPTION1,
 		},
-		validators: {
-			onChange: formSchema,
-		},
-		onSubmit: ({ value }) => {
-			console.log('🚀 ~ TanStackForm ~ value:', value);
-			alert(JSON.stringify(value, null, 2));
-		},
+		mode: 'onChange',
+		resolver: zodResolver(formSchema),
 	});
 
+	const onSubmit: SubmitHandler<FormSchema> = (data) => {
+		console.log('🚀 ~ ReactHookForm ~ data:', data);
+		return new Promise((resolve) => setTimeout(resolve, 1000));
+	};
+
+	const selectOptions = Object.entries(CHOICE_OPTIONS).map(([key, value]) => ({
+		value,
+		label: key,
+	}));
+
 	return (
-		<form onSubmit={form.handleSubmit} className='flex flex-col gap-3 p-4 border-2 rounded-md mt-3'>
-			<form.Field name='name'>
-				{(field) => (
-					<div className='flex flex-col gap-1'>
-						<label htmlFor={field.name}>name</label>
-						<input
-							id={field.name}
-							name={field.name}
-							value={field.state.value}
-							onBlur={field.handleBlur}
-							onChange={(e) => field.handleChange(e.target.value)}
-							className='border-2 border-gray-300 rounded-md p-2 w-[300px]'
-						/>
-						{field.state.meta.errors ? (
-							<pre className='text-xs text-red-500'>{field.state.meta.errors[0]?.message}</pre>
-						) : null}
-					</div>
-				)}
-			</form.Field>
+		<form onSubmit={handleSubmit(onSubmit)} className='flex gap-6 justify-around mt-3 py-6'>
+			<div className='flex flex-col gap-3'>
+				<div className='flex flex-col gap-1'>
+					<label htmlFor='name'>name</label>
+					<input {...register('name')} className='border-2 border-gray-300 rounded-md p-2 w-[300px]' />
+					{errors.name && <span className='text-xs text-red-500'>{errors.name.message}</span>}
+				</div>
 
-			<form.Field name='email'>
-				{(field) => (
-					<div className='flex flex-col gap-1'>
-						<label htmlFor={field.name}>email</label>
-						<input
-							name={field.name}
-							value={field.state.value}
-							onBlur={field.handleBlur}
-							type='email'
-							onChange={(e) => field.handleChange(e.target.value)}
-							className='border-2 border-gray-300 rounded-md p-2 w-[300px]'
-						/>
-						{field.state.meta.errors ? (
-							<pre className='text-xs text-red-500'>{field.state.meta.errors[0]?.message}</pre>
-						) : null}
-					</div>
-				)}
-			</form.Field>
+				<div className='flex flex-col gap-1'>
+					<label htmlFor='email'>email</label>
+					<input {...register('email')} className='border-2 border-gray-300 rounded-md p-2 w-[300px]' />
+					{errors.email && <span className='text-xs text-red-500'>{errors.email.message}</span>}
+				</div>
 
-			<form.Field name='password'>
-				{(field) => (
-					<div className='flex flex-col gap-1'>
-						<label htmlFor={field.name}>password</label>
-						<input
-							name={field.name}
-							value={field.state.value}
-							onBlur={field.handleBlur}
-							type='password'
-							onChange={(e) => field.handleChange(e.target.value)}
-							className='border-2 border-gray-300 rounded-md p-2 w-[300px]'
-						/>
-						{field.state.meta.errors ? (
-							<pre className='text-xs text-red-500'>{field.state.meta.errors[0]?.message}</pre>
-						) : null}
-					</div>
-				)}
-			</form.Field>
+				<div className='flex flex-col gap-1'>
+					<label htmlFor='password'>password</label>
+					<input {...register('password')} className='border-2 border-gray-300 rounded-md p-2 w-[300px]' />
+					{errors.password && <span className='text-xs text-red-500'>{errors.password.message}</span>}
+				</div>
 
-			<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
-				{([canSubmit, isSubmitting]) => (
-					<button
-						type='submit'
-						disabled={!canSubmit}
-						className={`rounded-md p-2 w-[300px] text-white ${canSubmit ? 'bg-blue-500' : 'bg-gray-400 cursor-not-allowed'}`}
-					>
-						{isSubmitting ? '...' : 'Submit'}
-					</button>
-				)}
-			</form.Subscribe>
+				<div className='flex flex-col gap-1'>
+					<label htmlFor='choice'>Choice</label>
+					<Controller
+						name='choice'
+						control={control}
+						render={({ field }) => (
+							<Select defaultValue={field.value} onValueChange={field.onChange}>
+								<SelectTrigger className='w-[300px]'>
+									<SelectValue placeholder='Select option' />
+								</SelectTrigger>
+								<SelectContent>
+									{selectOptions.map((option) => (
+										<SelectItem key={option.value} value={option.value}>
+											{option.label}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
+						)}
+					/>
+					{errors.choice && <span className='text-xs text-red-500'>{errors.choice.message}</span>}
+				</div>
+			</div>
+
+			<button
+				type='submit'
+				className={`rounded-md p-2 w-[200px] my-auto text-white ${
+					isValid ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'
+				}`}
+				disabled={isSubmitting || !isValid}
+			>
+				{isSubmitting ? '...' : 'Submit'}
+			</button>
 		</form>
 	);
 }
