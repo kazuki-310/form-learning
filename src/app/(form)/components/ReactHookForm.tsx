@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import clsx from 'clsx';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { CHOICE_OPTIONS, type FormSchema, formSchema } from '../../schemas/form-schema';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './Select';
@@ -24,7 +25,7 @@ export function ReactHookForm() {
 
 	const onSubmit: SubmitHandler<FormSchema> = (data) => {
 		console.log('🚀 ~ ReactHookForm ~ data:', data);
-		return new Promise((resolve) => setTimeout(resolve, 1000));
+		return new Promise((resolve) => setTimeout(resolve, 2000));
 	};
 
 	const selectOptions = Object.entries(CHOICE_OPTIONS).map(([key, value]) => ({
@@ -79,9 +80,10 @@ export function ReactHookForm() {
 
 			<button
 				type='submit'
-				className={`rounded-md p-2 w-[200px] my-auto text-white ${
-					isValid ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'
-				}`}
+				className={clsx(
+					'rounded-md p-2 w-[200px] my-auto text-white',
+					isValid ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed',
+				)}
 				disabled={isSubmitting || !isValid}
 			>
 				{isSubmitting ? '...' : 'Submit'}
