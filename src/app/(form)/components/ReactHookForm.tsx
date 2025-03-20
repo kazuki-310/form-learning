@@ -3,7 +3,7 @@
 import { useForm } from '@tanstack/react-form';
 import { formSchema } from '../../schemas/form-schema';
 
-export function TanStackForm() {
+export function ReactHookForm() {
 	const form = useForm({
 		defaultValues: {
 			name: '',
