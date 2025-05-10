@@ -1,5 +1,5 @@
+import { type InferType, mixed, object, string } from 'yup';
 import { z } from 'zod';
-import { InferType, object, string,mixed } from "yup";
 
 export const CHOICE_OPTIONS = {
 	OPTION1: 'option1',
@@ -24,8 +24,6 @@ export const formSchemaYup = object().shape({
 	name: string().min(6, 'Name must be at least 6 characters long').required(),
 	email: string().email('Invalid email address').required(),
 	password: string().min(8, 'Password must be at least 8 characters long').required(),
-  choice: string()
-    .oneOf(Object.values(CHOICE_OPTIONS))
-    .required(),
-})
+	choice: string().oneOf(Object.values(CHOICE_OPTIONS)).required(),
+});
 export type FormSchemaYup = InferType<typeof formSchemaYup>;
