@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 import { CHOICE_OPTIONS, type FormSchema, formSchema } from '../../schemas/form-schema';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/Select';
 
 export function ReactHookForm() {
 	const {

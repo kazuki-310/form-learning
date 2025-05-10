@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google';
 import type React from 'react';
 import './globals.css';
-import Header from './(form)/components/Header';
+import Header from './components/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 

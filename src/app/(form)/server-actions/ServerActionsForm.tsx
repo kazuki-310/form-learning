@@ -3,7 +3,7 @@
 import { CHOICE_OPTIONS, type FormSchema } from '@/app/schemas/form-schema';
 import clsx from 'clsx';
 import { useActionState } from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/Select';
 import { type FormStateWithErrors, createPost } from './actions';
 
 const defaultValue = {
