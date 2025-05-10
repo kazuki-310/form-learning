@@ -14,6 +14,10 @@ export function TanStackForm() {
 		onSubmit: async ({ value }) => {
 			alert(JSON.stringify(value, null, 2));
 		},
+		validators: {
+			onChangeAsync: formSchema,
+			onBlurAsyncDebounceMs: 500,
+		},
 	});
 
 	const selectOptions = Object.entries(CHOICE_OPTIONS).map(([key, value]) => ({
@@ -26,28 +30,28 @@ export function TanStackForm() {
 			<div className='flex flex-col gap-3'>
 				<form.AppField
 					name='name'
-					asyncDebounceMs={500}
-					validators={{
-						onChangeAsync: formSchema.shape.name,
-					}}
+					// asyncDebounceMs={500}
+					// validators={{
+					// 	onChangeAsync: formSchema.shape.name,
+					// }}
 				>
 					{(field) => <field.TextField label='Name' />}
 				</form.AppField>
 				<form.AppField
 					name='email'
-					asyncDebounceMs={500}
-					validators={{
-						onChangeAsync: formSchema.shape.email,
-					}}
+					// asyncDebounceMs={500}
+					// validators={{
+					// 	onChangeAsync: formSchema.shape.email,
+					// }}
 				>
 					{(field) => <field.TextField label='Email' />}
 				</form.AppField>
 				<form.AppField
 					name='password'
-					asyncDebounceMs={500}
-					validators={{
-						onChangeAsync: formSchema.shape.password,
-					}}
+					// asyncDebounceMs={500}
+					// validators={{
+					// 	onChangeAsync: formSchema.shape.password,
+					// }}
 				>
 					{(field) => <field.TextField label='Password' />}
 				</form.AppField>
